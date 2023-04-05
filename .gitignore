@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+
+# built output
+/dist
+
+# IDE files
+.vscode/
+.idea/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# macOS
+.DS_Store
+
+# TypeScript
+*.tsbuildinfo
+*.ts
+
+# Vite
+.cache/
+
+# Styled Components
+/stories/
