@@ -61,9 +61,9 @@ function App() {
       <AppWrapper>
         <Header logo="Logo" onThemeChange={toggleTheme} setJsonOutput={setJsonOutput} handleFile={function (file: File): void {
           throw new Error('Function not implemented.');
-        } } theme={undefined} /> 
+        } } theme={theme} /> 
         <TwoColumnLayout theme={theme} children={[
-          <DisplayText jsonOutput={jsonOutput} />, "two"]} />
+          <DisplayText theme={Button?.defaultProps?.theme?.textColor} jsonOutput={jsonOutput} />, "two"]} />
       </AppWrapper>
     </ThemeProvider>
   )

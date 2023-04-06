@@ -21,7 +21,6 @@ const Nav = styled.nav`
 `;
 
 const ThemeButton = styled.button`
-  background-color: #fff;
   color: #333;
   border: none;
   border-radius: 4px;
@@ -38,7 +37,6 @@ type HeaderProps = {
 };
 
 const Header = ({ logo, onThemeChange, setJsonOutput, theme }: HeaderProps) => {
-
   const handleThemeChange = () => {
     onThemeChange();
   };
@@ -47,7 +45,15 @@ const Header = ({ logo, onThemeChange, setJsonOutput, theme }: HeaderProps) => {
     <HeaderContainer theme={theme}>
       <Logo>{logo}</Logo>
       <Nav>
-        <ThemeButton onClick={handleThemeChange}>Change Theme</ThemeButton>
+        <ThemeButton onClick={handleThemeChange}>{theme.textColor === "#333" ? (
+                    <span role="img" aria-label="Měsíc">
+                    🌙
+                    </span>
+        ) : (
+          <span role="img" aria-label="Slunce">
+          ☀️
+        </span>
+        )}</ThemeButton>
         <FileToJsonConverter setJsonOutput={setJsonOutput} handleFile={function (fileContents: string): void {
           throw new Error("Function not implemented.");
         } } />
