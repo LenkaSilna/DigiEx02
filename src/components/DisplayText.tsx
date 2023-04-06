@@ -14,6 +14,7 @@ height: 85%;
 padding: 20px;
 overflow: auto;
 word-wrap: break-word;
+flex-basis: 50%;
 `;
 
 const DisplayText: React.FC<Props> = ({ jsonOutput }) => {

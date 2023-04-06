@@ -9,10 +9,9 @@ const Container = styled.div`
 
 const Column = styled.div`
   flex: 1;
-  height: 100%;
+  flex-basis: 50%;
   padding: 20px;
   overflow: auto;
-  word-wrap: break-word;
 `;
 
 const LeftColumn = styled(Column)`
