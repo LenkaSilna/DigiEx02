@@ -7,6 +7,15 @@ interface Props {
   theme: string;
 }
 
+const ContainerDiv = styled.div`
+border: 1px solid #4bcccc;
+border-radius: 4px;
+height: 85%;
+padding: 20px;
+overflow: auto;
+word-wrap: break-word;
+`;
+
 const DisplayText: React.FC<Props> = ({ jsonOutput }) => {
     let parsedOutput = jsonOutput.length > 0 ? JSON.parse(jsonOutput) : [];
   try {
@@ -14,16 +23,16 @@ const DisplayText: React.FC<Props> = ({ jsonOutput }) => {
   } catch (err) {
     console.error('Error while parsing JSON:', err);
     return (
-        <Container>
+        <ContainerDiv>
             <Loading theme={{
                 textColor: ""
             }} />
-        </Container>
+        </ContainerDiv>
       );
   }
 
   return (
-    <Container>
+    <ContainerDiv>
       {parsedOutput.map((obj: Record<string, unknown>, index: number) => {
         const text = (obj as { text?: string }).text;
         const paragraphs = text ? text.split("\n") : [];
@@ -35,7 +44,7 @@ const DisplayText: React.FC<Props> = ({ jsonOutput }) => {
           </React.Fragment>
         );
       })}
-    </Container>
+    </ContainerDiv>
   );
 };
 

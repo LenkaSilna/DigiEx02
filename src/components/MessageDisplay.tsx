@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import MessageIcon from './MessageIcon';
 
 interface Message {
   id: number;
   text: string;
 }
 
+
 const MessageList = styled.ul`
   list-style-type: none;
   padding: 0;
+  border: 1px solid #4bcccc;
+  border-radius: 4px;
+  height: 70%;
+  margin-bottom: 15px;
 `;
 
 const MessageItem = styled.li`
-  margin-bottom: 8px;
+  margin: 8px;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #4bcccc;
+  border-radius: 4px;
 `;
 
 
@@ -73,7 +80,7 @@ const MessageDisplay: React.FC = () => {
     if (messageList.length > 0) {
       const updatedMessageList = messageList.slice(0, messageList.length - 1);
       setMessageList(updatedMessageList);
-    }
+    }     
   };
 
   const handleRemoveAllMessages = () => {
@@ -84,7 +91,7 @@ const MessageDisplay: React.FC = () => {
     <>
       <MessageList>
         {messageList.slice().reverse().map((message) => (
-          <MessageItem key={message.id}>{message.text}</MessageItem>
+          <MessageItem key={message.id}><MessageIcon />{message.text}</MessageItem>
         ))}
       </MessageList>
       <InputContainer>
