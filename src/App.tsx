@@ -6,6 +6,7 @@ import Header from './components/Header';
 import TwoColumnLayout from './components/TwoColumnLayout';
 import DisplayText from './components/DisplayText';
 import Loading from './components/Loading';
+import MessageDisplay from './components/MessageDisplay';
 
 const Button = styled.button`
   color: ${props => props.theme.textColor};
@@ -63,7 +64,7 @@ function App() {
           throw new Error('Function not implemented.');
         } } theme={theme} /> 
         <TwoColumnLayout theme={theme} children={[
-          <DisplayText theme={Button?.defaultProps?.theme?.textColor} jsonOutput={jsonOutput} />, "two"]} />
+          <DisplayText theme={Button?.defaultProps?.theme?.textColor} jsonOutput={jsonOutput} />, <MessageDisplay />]} />
       </AppWrapper>
     </ThemeProvider>
   )
