@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import FileToJsonConverter from "./FileToJsonConverter";
 
-const HeaderContainer = styled.header`
+const HeaderContainer = styled.header<{ theme: any }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 20px;
-  background-color: #333;
-  color: #fff;
+  background-color: ${(props) => props.theme.backgroundColor};
+  color: ${(props) => props.theme.textColor};
 `;
 
 const Logo = styled.h1`
@@ -34,16 +34,17 @@ type HeaderProps = {
   onThemeChange: () => void;
   handleFile: (file: File) => void;
   setJsonOutput: (json: string) => void;
+  theme: any;
 };
 
-const Header = ({ logo, onThemeChange, setJsonOutput }: HeaderProps) => {
+const Header = ({ logo, onThemeChange, setJsonOutput, theme }: HeaderProps) => {
 
   const handleThemeChange = () => {
     onThemeChange();
   };
 
   return (
-    <HeaderContainer>
+    <HeaderContainer theme={theme}>
       <Logo>{logo}</Logo>
       <Nav>
         <ThemeButton onClick={handleThemeChange}>Change Theme</ThemeButton>

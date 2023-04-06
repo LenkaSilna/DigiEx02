@@ -1,6 +1,12 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
+type LoadingProps = {
+  theme: {
+    textColor: string;
+  };
+};
+
 const pulsate = keyframes`
   0% {
     opacity: 0.6;
@@ -13,17 +19,17 @@ const pulsate = keyframes`
   }
 `;
 
-const LoadingText = styled.span`
+const LoadingText = styled.span<LoadingProps>`
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
-  color: #333;
+  color: ${props => props.theme.textColor};
   animation: ${pulsate} 1s ease-in-out infinite;
 `;
 
-const Loading = () => {
+const Loading = ({ theme }: LoadingProps) => {
   return (
-      <LoadingText>Nahrajte soubor...</LoadingText>
+      <LoadingText theme={theme}>Nahrajte soubor...</LoadingText>
   );
 };
 

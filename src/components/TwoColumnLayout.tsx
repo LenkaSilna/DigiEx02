@@ -16,15 +16,21 @@ const Column = styled.div`
 `;
 
 const LeftColumn = styled(Column)`
-  background-color: #f5f5f5;
+  background-color: ${(props) => props.theme.backgroundColor};
+  color: ${(props) => props.theme.textColor};
 `;
 
 const RightColumn = styled(Column)`
-  background-color: #dcdcdc;
+  background-color: ${(props) => props.theme.backgroundColor};
+  color: ${(props) => props.theme.textColor};
 `;
 
 type TwoColumnLayoutProps = {
   children: [ReactNode, ReactNode];
+  theme: {
+    backgroundColor: string;
+    textColor: string;
+  };
 };
 
 const TwoColumnLayout = ({ children }: TwoColumnLayoutProps) => {
