@@ -45,6 +45,7 @@ const AppWrapper = styled.div`
 function App() {
   const [theme, setTheme] = useState(Button?.defaultProps?.theme);
   const [jsonOutput, setJsonOutput] = useState<string>('');
+  const [apiResponse, setApiResponse] = useState<any>(null);
 
   useEffect(() => {
     const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -64,7 +65,7 @@ function App() {
           throw new Error('Function not implemented.');
         } } theme={theme} /> 
         <TwoColumnLayout theme={theme} children={[
-          <DisplayText theme={Button?.defaultProps?.theme?.textColor} jsonOutput={jsonOutput} />, <MessageDisplay />]} />
+          <DisplayText theme={Button?.defaultProps?.theme?.textColor} jsonOutput={jsonOutput} apiResponse={apiResponse} />, <MessageDisplay setApiResponse={setApiResponse} apiResponse={apiResponse} />]} />
       </AppWrapper>
     </ThemeProvider>
   )
