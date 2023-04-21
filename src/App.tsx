@@ -48,6 +48,7 @@ function App() {
   const [jsonOutput, setJsonOutput] = useState<string>('');
   const [apiResponse, setApiResponse] = useState<ApiResponse | null>(null);
 
+
   useEffect(() => {
     const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     if (isDark) {

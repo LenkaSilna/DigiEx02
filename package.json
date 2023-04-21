@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "cors-anywhere": "node server.js"
   },
   "dependencies": {
     "@types/node": "^18.15.11",

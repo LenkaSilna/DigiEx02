@@ -72,8 +72,9 @@ const Button = styled.button`
 const MessageDisplay: React.FC<MessageDisplayProps> = ({ setApiResponse, apiResponse }) => {
   const [messageList, setMessageList] = useState<Message[]>([]);
   const [message, setMessage] = useState('');
-  const apiUrl = "http://localhost:8080/http://ec2-18-198-81-231.eu-central-1.compute.amazonaws.com:5000/";
-  //const apiUrl = "https://cors-anywhere.herokuapp.com/ec2-18-198-81-231.eu-central-1.compute.amazonaws.com:5000";
+  const apiUrl = `http://localhost:8080/http://ec2-18-198-81-231.eu-central-1.compute.amazonaws.com:5000/`;
+
+  //todo: pokud začnu psát zprávu aktualizuji state v ResponseDisplay na null nebo loader
 
   const handleAddMessage = async (e: React.FormEvent) => {
     e.preventDefault();

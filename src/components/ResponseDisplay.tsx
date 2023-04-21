@@ -32,14 +32,12 @@ const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ apiResponse }) => {
 
   useEffect(() => {
     const jsonObject = apiResponse as ApiResponse;
-    setIsLoading(true);
     setJsonData(jsonObject);
   }, []);
 
   return (
     <ContainerDiv>
       <div>
-        {!isLoading && <p>Probíhá komunikace se serverem...</p>}
         {jsonData && (
           <>
             <h4>Odpověď:</h4>
