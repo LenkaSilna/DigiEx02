@@ -5,8 +5,8 @@ import Loading from "./Loading";
 interface Props {
   jsonOutput: string;
   theme: string;
-  apiResponse: any;
   onApiResponseReady?: (data: any) => void;
+  file: File | undefined;
 }
 
 const ContainerDiv = styled.div`
@@ -18,7 +18,7 @@ const ContainerDiv = styled.div`
   word-wrap: break-word;
 `;
 
-const DisplayText: React.FC<Props> = ({ apiResponse, jsonOutput, onApiResponseReady }) => {
+const DisplayText: React.FC<Props> = ({ jsonOutput, onApiResponseReady, file }) => {
   const [selectedTime, setSelectedTime] = useState<number | undefined>(undefined);
   let parsedOutput: any[] = [];
 
@@ -35,8 +35,7 @@ const DisplayText: React.FC<Props> = ({ apiResponse, jsonOutput, onApiResponseRe
         </ContainerDiv>
       );
     }
-  } else if (apiResponse instanceof FileList) {
-    const file: File = apiResponse[0];
+  } else if (file) {
     const reader: FileReader = new FileReader();
     reader.readAsText(file);
     reader.onload = () => {
@@ -50,17 +49,15 @@ const DisplayText: React.FC<Props> = ({ apiResponse, jsonOutput, onApiResponseRe
         }} />
       </ContainerDiv>
     );
-  } else if (typeof apiResponse === "string") {
-    parsedOutput.push({ text: apiResponse });
   } else {
     parsedOutput.push({ text: "No content available" });
   }
 
   useEffect(() => {
     if (onApiResponseReady) {
-      onApiResponseReady(apiResponse);
+      onApiResponseReady(null);
     }
-  }, [apiResponse, onApiResponseReady]);
+  }, [onApiResponseReady]);
 
   return (
     <ContainerDiv>

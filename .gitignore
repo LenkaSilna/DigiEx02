@@ -27,3 +27,5 @@ yarn-error.log*
 /stories/
 
 .env.local
+.env
+

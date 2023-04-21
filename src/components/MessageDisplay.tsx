@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import MessageIcon from './MessageIcon';
 import ResponseDisplay from './ResponseDisplay';
+import { ApiResponse } from './types';
 
 interface Message {
   id: number;
@@ -10,7 +11,7 @@ interface Message {
 
 interface MessageDisplayProps {
   setApiResponse: (response: any) => void;
-  apiResponse: {};
+  apiResponse: ApiResponse | null;
 }
 
 const MessageList = styled.ul`
@@ -18,7 +19,7 @@ const MessageList = styled.ul`
   padding: 0;
   border: 1px solid #4bcccc;
   border-radius: 4px;
-  height: 50%;
+
   margin-bottom: 15px;
 `;
 
@@ -42,7 +43,6 @@ const InputContainer = styled.div`
   font-family: monospace;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   align-items: stretch;
   margin-bottom: 16px;
   width: 100%;
@@ -72,7 +72,8 @@ const Button = styled.button`
 const MessageDisplay: React.FC<MessageDisplayProps> = ({ setApiResponse, apiResponse }) => {
   const [messageList, setMessageList] = useState<Message[]>([]);
   const [message, setMessage] = useState('');
-  const apiUrl = "https://cors-anywhere.herokuapp.com/ec2-18-198-81-231.eu-central-1.compute.amazonaws.com:5000";
+  const apiUrl = "http://localhost:8080/http://ec2-18-198-81-231.eu-central-1.compute.amazonaws.com:5000/";
+  //const apiUrl = "https://cors-anywhere.herokuapp.com/ec2-18-198-81-231.eu-central-1.compute.amazonaws.com:5000";
 
   const handleAddMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,14 +84,13 @@ const MessageDisplay: React.FC<MessageDisplayProps> = ({ setApiResponse, apiResp
     setMessageList([newMessage, ...messageList]);
     setMessage('');
     console.log(newMessage.text);
-    const response = await fetch(`${apiUrl}`, {
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        mode: 'no-cors',
         'Content-Type': 'text/plain; charset=utf-8',
       },
       body: encodeURIComponent(newMessage.text),
-    });
+    });    
     if (!response.ok) {
       console.log(response);
       console.error(response.statusText);
@@ -98,8 +98,8 @@ const MessageDisplay: React.FC<MessageDisplayProps> = ({ setApiResponse, apiResp
     }
   
     const responseData = await response.text();
-    console.log('API Response:', responseData);
-    setApiResponse(responseData);
+    console.log('API Response:', JSON.parse(responseData));
+    setApiResponse(JSON.parse(responseData));
   };
   
 
@@ -116,7 +116,7 @@ const MessageDisplay: React.FC<MessageDisplayProps> = ({ setApiResponse, apiResp
 
   return (
     <>
-      <ResponseDisplay />
+      <ResponseDisplay apiResponse={apiResponse} />
       <MessageList>
         {messageList.slice().reverse().map((message) => (
           <MessageItem key={message.id}><MessageIcon />{message.text}</MessageItem>

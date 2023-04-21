@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { ApiResponse } from './types';
 
-interface ApiResponse {
-  answer: string;
-  time_from_list: string[];
-  time_to_list: string[];
-  context_list: string[];
-  score_list: number[];
-}
-
-interface ApiData {
-  data: ApiResponse;
+interface ResponseDisplayProps {
+  apiResponse: ApiResponse | null;
 }
 
 const ContainerDiv = styled.div`
@@ -20,55 +13,43 @@ const ContainerDiv = styled.div`
   padding: 20px;
   overflow: auto;
   word-wrap: break-word;
+  font-family: monospace;
 `;
 
-const data = `
-{
-  "answer": "Pokyn D-22 byl nahrazen pokynem D-59.",
-  "time_from_list": [
-    "00:06:23,940",
-    "00:07:03,580"
-  ],
-  "time_to_list": [
-    "00:07:03,580",
-    "00:07:51,440"
-  ],
-  "context_list": [
-    "On je to pokyn, který se vlastně zpracovával v první polovině loňského roku. 30. 6. s. Takže jenom, kdybyste hledali pokyn D-22, tak ten platí pro ten loňský rok.",
-    "Ten pokyn D-59 je účinný od letošního roku, to znamená pro rok 2023. Ale řekněme si na rovinu, i ten pokyn D-"
-  ],
-  "score_list": [
-    0.6964789911669592,
-    0.6205222639655282
-  ]
-}`;
+const List = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
 
+const ListItem = styled.li`
+  padding: 8px;
+`;
 
-interface ResponseDisplayProps {
-  //apiResponse: ApiData;
-}
-
-const ResponseDisplay: React.FC<ResponseDisplayProps> = ({  }) => {
+const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ apiResponse }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [jsonData, setJsonData] = useState<ApiResponse | null>(null);
 
   useEffect(() => {
-    const jsonObject = JSON.parse(data) as ApiResponse;
+    const jsonObject = apiResponse as ApiResponse;
+    setIsLoading(true);
     setJsonData(jsonObject);
   }, []);
 
   return (
     <ContainerDiv>
       <div>
+        {!isLoading && <p>Probíhá komunikace se serverem...</p>}
         {jsonData && (
           <>
             <h4>Odpověď:</h4>
             <p>{jsonData.answer}</p>
             <h4>Kontext:</h4>
-            <ul>
+            <List>
               {jsonData.context_list.map((context, index) => (
-                <li key={index}>{context}</li>
+                <ListItem key={index}>{context}</ListItem>
               ))}
-            </ul>
+            </List>
           </>
         )}
       </div>
