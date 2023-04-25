@@ -50,7 +50,7 @@ const DisplayText: React.FC<Props> = ({ jsonOutput, onApiResponseReady, file }) 
       </ContainerDiv>
     );
   } else {
-    parsedOutput.push({ text: "No content available" });
+    parsedOutput.push({ text: "Nahrajte soubor" });
   }
 
   useEffect(() => {

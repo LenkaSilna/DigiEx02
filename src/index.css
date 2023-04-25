@@ -12,3 +12,8 @@ html {
 body {
   overflow: auto;
 }
+
+::selection {
+  color: #000;
+  background-color: hsl(28deg, 96%, 48%);
+}

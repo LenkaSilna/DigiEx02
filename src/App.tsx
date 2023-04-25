@@ -47,6 +47,7 @@ function App() {
   const [theme, setTheme] = useState(Button?.defaultProps?.theme);
   const [jsonOutput, setJsonOutput] = useState<string>('');
   const [apiResponse, setApiResponse] = useState<ApiResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   useEffect(() => {
@@ -67,7 +68,7 @@ function App() {
           throw new Error('Function not implemented.');
         } } theme={theme} /> 
         <TwoColumnLayout theme={theme} children={[
-          <DisplayText theme={Button?.defaultProps?.theme?.textColor} jsonOutput={jsonOutput} file={undefined} />, <MessageDisplay setApiResponse={setApiResponse} apiResponse={apiResponse} />]} />
+          <DisplayText theme={Button?.defaultProps?.theme?.textColor} jsonOutput={jsonOutput} file={undefined} />, <MessageDisplay setApiResponse={setApiResponse} apiResponse={apiResponse} isLoading={isLoading} setIsLoading={setIsLoading} />]} />
       </AppWrapper>
     </ThemeProvider>
   )

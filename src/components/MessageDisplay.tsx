@@ -12,6 +12,8 @@ interface Message {
 interface MessageDisplayProps {
   setApiResponse: (response: any) => void;
   apiResponse: ApiResponse | null;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
 }
 
 const MessageList = styled.ul`
@@ -69,15 +71,14 @@ const Button = styled.button`
   pointer-events: ${(props) => props.disabled ? 'none' : 'auto'};
 `;
 
-const MessageDisplay: React.FC<MessageDisplayProps> = ({ setApiResponse, apiResponse }) => {
+const MessageDisplay: React.FC<MessageDisplayProps> = ({ setApiResponse, apiResponse, isLoading, setIsLoading }) => {
   const [messageList, setMessageList] = useState<Message[]>([]);
   const [message, setMessage] = useState('');
-  const apiUrl = `http://localhost:8080/http://ec2-18-198-81-231.eu-central-1.compute.amazonaws.com:5000/`;
+  const apiUrl = `http://localhost:8080/${import.meta.env.VITE_APP_URL}`;
 
   //todo: pokud začnu psát zprávu aktualizuji state v ResponseDisplay na null nebo loader
-
-  const handleAddMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleAddMessage = async () => {
+    setIsLoading(true);
     const newMessage = { id: 0, text: message };
     const maxId = Math.max(...messageList.map((message) => message.id));
     newMessage.id = maxId + 1;
@@ -93,7 +94,6 @@ const MessageDisplay: React.FC<MessageDisplayProps> = ({ setApiResponse, apiResp
       body: encodeURIComponent(newMessage.text),
     });    
     if (!response.ok) {
-      console.log(response);
       console.error(response.statusText);
       return;
     }
@@ -101,6 +101,7 @@ const MessageDisplay: React.FC<MessageDisplayProps> = ({ setApiResponse, apiResp
     const responseData = await response.text();
     console.log('API Response:', JSON.parse(responseData));
     setApiResponse(JSON.parse(responseData));
+    setIsLoading(false);
   };
   
 
@@ -117,20 +118,25 @@ const MessageDisplay: React.FC<MessageDisplayProps> = ({ setApiResponse, apiResp
 
   return (
     <>
-      <ResponseDisplay apiResponse={apiResponse} />
+      <ResponseDisplay apiResponse={apiResponse} isLoading={isLoading} />
       <MessageList>
         {messageList.slice().reverse().map((message) => (
           <MessageItem key={message.id}><MessageIcon />{message.text}</MessageItem>
         ))}
       </MessageList>
       <InputContainer>
-        <form onSubmit={handleAddMessage}>
-          <Input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Napište zprávu..."
-          />
+      <form onSubmit={(e) => {
+            e.preventDefault();
+            handleAddMessage();
+            }}>
+      <Input
+          type="text"
+          value={message}
+          onChange={(e) => {
+            setMessage(e.target.value);
+          }}
+        placeholder="Položte dotaz k videu..."
+      />
           <ButtonContainer>
             <Button type="submit" disabled={!message}>
               Odeslat
