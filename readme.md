@@ -5,4 +5,4 @@ start server
 `node server.js`
 
 start dev
-`npm run dev`
+`yarn run dev`
