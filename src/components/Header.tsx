@@ -13,6 +13,7 @@ const HeaderContainer = styled.header<{ theme: any }>`
 
 const Logo = styled.h1`
   margin: 0;
+  text-shadow: color(display-p3 0 1 0.92) 0px 0px 15px;
 `;
 
 const Nav = styled.nav`

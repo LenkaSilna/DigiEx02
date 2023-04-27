@@ -31,7 +31,7 @@ Button.defaultProps = {
     // tmavý režim
     dark: {
       textColor: '#fff',
-      backgroundColor: '#333',
+      backgroundColor: 'rgb(56,57,57)',
       hoverColor: '#444',
     },
   },

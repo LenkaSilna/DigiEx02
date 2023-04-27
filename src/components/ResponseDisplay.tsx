@@ -28,6 +28,14 @@ const ListItem = styled.li`
   padding: 8px;
 `;
 
+const AnswerHeadline = styled.h4`
+  text-shadow: color(display-p3 0 1 0.92) 0px 0px 15px;  
+`;
+
+const Answer = styled.p`
+  text-shadow: color(display-p3 0 1 0.92) 0px 0px 15px;  
+`;
+
 const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ apiResponse, isLoading }) => {
 
   const [jsonData, setJsonData] = useState<ApiResponse | null>(null);
@@ -40,11 +48,11 @@ const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ apiResponse, isLoadin
   return (
     <ContainerDiv>
       <div>
-      {isLoading && <p>Načítám odpověď...</p>}
+      {isLoading && <AnswerHeadline>Načítám odpověď...</AnswerHeadline>}
         {!isLoading && jsonData && (
           <>
-            <h4>Odpověď:</h4>
-            <p>{jsonData.answer}</p>
+            <AnswerHeadline>Odpověď:</AnswerHeadline>
+            <Answer>{jsonData.answer}</Answer>
             <List>
               {jsonData.context_list.map((context, index) => (
                 <ContextItem key={index} title={`Kontext ${index + 1}`} content={context}/>
