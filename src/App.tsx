@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import FileToJsonConverter from './components/FileToJsonConverter';
 import styled, { ThemeProvider } from 'styled-components';
@@ -48,6 +48,34 @@ function App() {
   const [jsonOutput, setJsonOutput] = useState<string>('');
   const [apiResponse, setApiResponse] = useState<ApiResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  // const [searchQueryTime, setSearchQueryTime] = useState<string[]>([]); // [timeFrom, timeTo]
+  const [searchedLinks, setSearchedLinks] = useState<{ [key: string]: React.RefObject<HTMLParagraphElement> }>({});
+  
+  // Funkce pro vyhledávání kontextů
+  const handleSearch = (timeFrom: string, timeTo: string) => {
+    const refs: { [key: string]: React.RefObject<HTMLParagraphElement> } = {};
+    const parsedOutput = JSON.parse(jsonOutput);
+    parsedOutput.forEach((context: any, index: number) => {
+      if (context.start === timeFrom[0]) {
+        console.log("found");
+        const ref = React.createRef<HTMLParagraphElement>();
+        refs[`context${context.index}`] = ref;
+      }
+      if (context.start === timeTo[0]) {
+        const ref = React.createRef<HTMLParagraphElement>();
+        refs[`context${context.index}`] = ref;
+      }
+    });
+    //console.log(refs);
+    setSearchedLinks(refs);
+  };
+  
+  // useEffect pro předání searchedLinks do DisplayText komponenty
+  useEffect(() => {
+    if (jsonOutput.length > 0) {
+      setSearchedLinks({});
+    }
+  }, [jsonOutput]);
 
 
   useEffect(() => {
@@ -68,7 +96,7 @@ function App() {
           throw new Error('Function not implemented.');
         } } theme={theme} /> 
         <TwoColumnLayout theme={theme} children={[
-          <DisplayText theme={Button?.defaultProps?.theme?.textColor} jsonOutput={jsonOutput} file={undefined} />, <MessageDisplay setApiResponse={setApiResponse} apiResponse={apiResponse} isLoading={isLoading} setIsLoading={setIsLoading} />]} />
+          <DisplayText theme={Button?.defaultProps?.theme?.textColor} jsonOutput={jsonOutput} file={undefined} searchedLinks={searchedLinks} />, <MessageDisplay setApiResponse={setApiResponse} apiResponse={apiResponse} isLoading={isLoading} setIsLoading={setIsLoading} handleSearch={handleSearch} searchedLinks={searchedLinks} />]} />
       </AppWrapper>
     </ThemeProvider>
   )

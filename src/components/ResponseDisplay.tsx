@@ -6,6 +6,7 @@ import ContextItem from "./ContextItem";
 interface ResponseDisplayProps {
   apiResponse: ApiResponse | null;
   isLoading: boolean;
+  searchedLinks: { [key: string]: React.RefObject<HTMLParagraphElement> };
 }
 
 const ContainerDiv = styled.div`
@@ -36,7 +37,7 @@ const Answer = styled.p`
   text-shadow: color(display-p3 0 1 0.92) 0px 0px 15px;  
 `;
 
-const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ apiResponse, isLoading }) => {
+const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ apiResponse, isLoading, searchedLinks }) => {
 
   const [jsonData, setJsonData] = useState<ApiResponse | null>(null);
 
@@ -55,7 +56,8 @@ const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ apiResponse, isLoadin
             <Answer>{jsonData.answer}</Answer>
             <List>
               {jsonData.context_list.map((context, index) => (
-                <ContextItem key={index} title={`Kontext ${index + 1}`} content={context}/>
+                <ContextItem key={index} title={`Kontext ${index + 1}`} content={context} searchedLinks={searchedLinks}/>
+
               ))}
             </List>
           </>

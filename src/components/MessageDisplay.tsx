@@ -14,6 +14,7 @@ interface MessageDisplayProps {
   apiResponse: ApiResponse | null;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
+  handleSearch: (timeFrom: string, timeTo: string) => void;
 }
 
 const MessageList = styled.ul`
@@ -45,7 +46,6 @@ const InputContainer = styled.div`
   font-family: monospace;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   margin-bottom: 16px;
   width: 100%;
   border: 1px solid #ccc;
@@ -71,7 +71,7 @@ const Button = styled.button`
   pointer-events: ${(props) => props.disabled ? 'none' : 'auto'};
 `;
 
-const MessageDisplay: React.FC<MessageDisplayProps> = ({ setApiResponse, apiResponse, isLoading, setIsLoading }) => {
+const MessageDisplay: React.FC<MessageDisplayProps> = ({ setApiResponse, apiResponse, isLoading, setIsLoading, handleSearch }) => {
   const [messageList, setMessageList] = useState<Message[]>([]);
   const [message, setMessage] = useState('');
   const apiUrl = `http://localhost:8080/${import.meta.env.VITE_APP_URL}`;
@@ -102,6 +102,7 @@ const MessageDisplay: React.FC<MessageDisplayProps> = ({ setApiResponse, apiResp
     console.log('API Response:', JSON.parse(responseData));
     setApiResponse(JSON.parse(responseData));
     setIsLoading(false);
+    handleSearch(JSON.parse(responseData).time_from_list, JSON.parse(responseData).time_to_list);
   };
   
 

@@ -7,6 +7,7 @@ interface Props {
   theme: string;
   onApiResponseReady?: (data: any) => void;
   file: File | undefined;
+  searchedLinks: { [key: string]: React.RefObject<HTMLParagraphElement> };
 }
 
 const ContainerDiv = styled.div`
@@ -18,10 +19,10 @@ const ContainerDiv = styled.div`
   word-wrap: break-word;
 `;
 
-const DisplayText: React.FC<Props> = ({ jsonOutput, onApiResponseReady, file }) => {
+const DisplayText: React.FC<Props> = ({ jsonOutput, onApiResponseReady, file, searchedLinks }) => {
   const [selectedTime, setSelectedTime] = useState<number | undefined>(undefined);
   let parsedOutput: any[] = [];
-
+  let time = 0;
   if (jsonOutput.length > 0) {
     try {
       parsedOutput = JSON.parse(jsonOutput);
@@ -58,7 +59,7 @@ const DisplayText: React.FC<Props> = ({ jsonOutput, onApiResponseReady, file }) 
       onApiResponseReady(null);
     }
   }, [onApiResponseReady]);
-
+  console.log(searchedLinks);
   return (
     <ContainerDiv>
       { parsedOutput.map((obj: Record<string, unknown>, index: number) => {
