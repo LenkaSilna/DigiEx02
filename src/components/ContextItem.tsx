@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import LinkIcon from "./LinkIcon";
+
 
 interface AccordionProps {
   title: string;
   content: string;
-  key: number;
+  index: number;
   children?: React.ReactNode;
-  searchedLinks: { [key: string]: React.RefObject<HTMLParagraphElement> };
+  linkRef: any;
 }
 
 const AccordionContainer = styled.div`
@@ -40,23 +40,24 @@ const AccordionContent = styled.p`
   padding: 8px;
 `;
 
-const ContextItem: React.FC<AccordionProps> = ({ title, content, searchedLinks }) => {
+const ContextItem: React.FC<AccordionProps> = ({ title, content, linkRef }) => {
   const [isActive, setIsActive] = useState(false);
 
   const handleHeaderClick = () => {
     setIsActive(!isActive);
-  }
+  };
 
   return (
     <AccordionContainer>
-      <AccordionHeader
-        className={isActive ? 'active' : ''}
-        onClick={handleHeaderClick}
-      >
+      <AccordionHeader className={isActive ? "active" : ""} onClick={handleHeaderClick}>
         <AccordionTitle>{title}</AccordionTitle>
-        {isActive ? '-' : '+'}
+        {isActive ? "-" : "+"}
       </AccordionHeader>
-      {isActive && <AccordionContent><LinkIcon/> {content}</AccordionContent>}
+      {isActive && (
+        <AccordionContent>
+          {content}
+        </AccordionContent>
+      )}
     </AccordionContainer>
   );
 };

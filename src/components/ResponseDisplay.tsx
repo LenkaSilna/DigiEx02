@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ApiResponse } from './types';
 import ContextItem from "./ContextItem";
+import LinkIcon from "./LinkIcon";
 
 interface ResponseDisplayProps {
   apiResponse: ApiResponse | null;
@@ -29,11 +30,11 @@ const ListItem = styled.li`
   padding: 8px;
 `;
 
-const AnswerHeadline = styled.h4`
+const AnswerHeadline = styled.p`
   text-shadow: color(display-p3 0 1 0.92) 0px 0px 15px;  
 `;
 
-const Answer = styled.p`
+const Answer = styled.h4`
   text-shadow: color(display-p3 0 1 0.92) 0px 0px 15px;  
 `;
 
@@ -46,6 +47,9 @@ const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ apiResponse, isLoadin
     setJsonData(jsonObject);
   }, [apiResponse]);
 
+
+  const linkKeys = Object.keys(searchedLinks);
+
   return (
     <ContainerDiv>
       <div>
@@ -54,11 +58,17 @@ const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ apiResponse, isLoadin
           <>
             <AnswerHeadline>Odpověď:</AnswerHeadline>
             <Answer>{jsonData.answer}</Answer>
+            {linkKeys.map((key, index) => (
+              <LinkIcon key={key} href={key} />
+            ))}
             <List>
               {jsonData.context_list.map((context, index) => (
-                <ContextItem key={index} title={`Kontext ${index + 1}`} content={context} searchedLinks={searchedLinks}/>
-
-              ))}
+                  <ContextItem
+                  key={index}
+                  title={`Kontext ${index + 1}`}
+                  content={context}
+                  linkRef={linkKeys} index={0}/>
+                ))}
             </List>
           </>
         )}

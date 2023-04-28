@@ -59,11 +59,11 @@ function App() {
       if (context.start === timeFrom[0]) {
         console.log("found");
         const ref = React.createRef<HTMLParagraphElement>();
-        refs[`context${context.index}`] = ref;
+        refs[`${context.index}`] = ref;
       }
       if (context.start === timeTo[0]) {
         const ref = React.createRef<HTMLParagraphElement>();
-        refs[`context${context.index}`] = ref;
+        refs[`${context.index}`] = ref;
       }
     });
     //console.log(refs);
